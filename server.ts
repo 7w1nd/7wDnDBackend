@@ -5,6 +5,7 @@ import connectDB from './src/db';
 import systemRoutes from './src/routes/system.routes';
 import racesRoutes from './src/routes/race.routes';
 import charsRoutes from './src/routes/characteristic.routes';
+import skillRoutes from './src/routes/skill.routes';
 import classesRoutes from './src/routes/class.routes';
 import raceTraitsRoutes from './src/routes/race.trait.routes';
 
@@ -23,6 +24,7 @@ app.use('/api/races', racesRoutes);
 app.use('/api/raceTraits', raceTraitsRoutes);
 app.use('/api/classes', classesRoutes);
 app.use('/api/characteristics', charsRoutes);
+app.use('/api/skills', skillRoutes);
 
 app.get('/api/', (req, res) => res.json({ message: 'Api alive!' }));
 

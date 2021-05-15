@@ -42,7 +42,11 @@
             "$oid": "609f859fb43e932a68681fd4"
         },
         "name": "Rogue",
-        "description": "The rogue is a thief and a scout, an opportunist capable of delivering brutal strikes against unwary foes."
+        "description": "The rogue is a thief and a scout, an opportunist capable of delivering brutal strikes against unwary foes.",
+        "role": "Rogues excel at moving about unseen and catching foes unaware, and tend to avoid head-to-head combat. Their varied skills and abilities allow them to be highly versatile, with great variations in expertise existing between different rogues. Most, however, excel in overcoming hindrances of all types, from unlocking doors and disarming traps to outwitting magical hazards and conning dull-witted opponents.",
+        "availableAlignments": "LN,LN,LE,NG,N,NE,CG,CN,CE",
+        "hitDice": "8",
+        "skillRanksPerLvl": "8"
     }, {
         "_id": {
             "$oid": "609fc7de3a70ef30c04bc546"
@@ -51,16 +55,11 @@
             "$oid": "609f859fb43e932a68681fd4"
         },
         "name": "Bard",
-        "description": "The bard uses skill and spell alike to bolster his allies, confound his enemies, and build upon his fame."
-    }, {
-        "_id": {
-            "$oid": "609fc7f43a70ef30c04bc547"
-        },
-        "system": {
-            "$oid": "609f859fb43e932a68681fd4"
-        },
-        "name": "Fighter",
-        "description": "Brave and stalwart, the fighter is a master of all manner of arms and armor."
+        "description": "The bard uses skill and spell alike to bolster his allies, confound his enemies, and build upon his fame",
+        "role": "Bards capably confuse and confound their foes while inspiring their allies to ever-greater daring. While accomplished with both weapons and magic, the true strength of bards lies outside melee, where they can support their companions and undermine their foes without fear of interruptions to their performances.",
+        "availableAlignments": "LN,LN,LE,NG,N,NE,CG,CN,CE",
+        "hitDice": "8",
+        "skillRanksPerLvl": "6"
     }],
     "racetraits": [{
         "_id": {
@@ -182,5 +181,493 @@
             "$oid": "609fc254335d431ea0ec16ab"
         },
         "description": "Halflings begin play speaking Common and Halfling. Halflings with high Intelligence scores can choose from the following: Dwarven, Elven, Gnome, and Goblin"
+    }],
+    "characteristics": [{
+        "_id": {
+            "$oid": "609fd7e480027e05743ad14b"
+        },
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Strength",
+        "description": "Strength measures muscle and physical power. This ability is important for those who engage in hand-to-hand (or \"melee\") combat, such as fighters, monks, paladins, and some rangers. Strength also sets the maximum amount of weight your character can carry. A character with a Strength score of 0 is too weak to move in any way and is unconscious. Some creatures do not possess a Strength score and have no modifier at all to Strength-based skills or checks.",
+        "shortName": "Str",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fd81280027e05743ad14c"
+        },
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Dexterity",
+        "description": "Dexterity measures agility, reflexes, and balance. This ability is the most important one for rogues, but it's also useful for characters who wear light or medium armor or no armor at all. This ability is vital for characters seeking to excel with ranged weapons, such as the bow or sling. A character with a Dexterity score of 0 is incapable of moving and is effectively immobile (but not unconscious).",
+        "shortName": "Dex",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fd82b80027e05743ad14d"
+        },
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Constitution",
+        "description": "Constitution represents your character's health and stamina. A Constitution bonus increases a character's hit points, so the ability is important for all classes. Some creatures, such as undead and constructs, do not have a Constitution score. Their modifier is +0 for any Constitution-based checks. A character with a Constitution score of 0 is dead.",
+        "shortName": "Con",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fd83a80027e05743ad14e"
+        },
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Intelligence",
+        "description": "Intelligence determines how well your character learns and reasons. This ability is important for wizards because it affects their spellcasting ability in many ways. Creatures of animal-level instinct have Intelligence scores of 1 or 2. Any creature capable of understanding speech has a score of at least 3. A character with an Intelligence score of 0 is comatose. Some creatures do not possess an Intelligence score. Their modifier is +0 for any Intelligence-based skills or checks.",
+        "shortName": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fd84a80027e05743ad14f"
+        },
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Wisdom",
+        "description": "Wisdom describes a character's willpower, common sense, awareness, and intuition. Wisdom is the most important ability for clerics and druids, and it is also important for paladins and rangers. If you want your character to have acute senses, put a high score in Wisdom. Every creature has a Wisdom score. A character with a Wisdom score of 0 is incapable of rational thought and is unconscious.",
+        "shortName": "Wis",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fd8ab80027e05743ad150"
+        },
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Charisma",
+        "description": "Charisma measures a character's personality, personal magnetism, ability to lead, and appearance. It is the most important ability for paladins, sorcerers, and bards. It is also important for clerics, since it affects their ability to channel energy. For undead creatures, Charisma is a measure of their unnatural \"lifeforce.\" Every creature has a Charisma score. A character with a Charisma score of 0 is not able to exert himself in any way and is unconscious.",
+        "shortName": "Cha",
+        "__v": 0
+    }],
+    "skills": [{
+        "_id": {
+            "$oid": "609fdcf1aec7296eb88e3b54"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Acrobatics",
+        "description": "You can keep your balance while traversing narrow or treacherous surfaces. You can also dive, flip, jump, and roll to avoid attacks and overcome obstacles.",
+        "charactersitic": "Dex",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdd24aec7296eb88e3b55"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Appraise",
+        "description": "You can evaluate the monetary value of an object.",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdd3daec7296eb88e3b56"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Bluff",
+        "description": "You know how to tell a lie.",
+        "charactersitic": "Cha",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdd4daec7296eb88e3b57"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Climb",
+        "description": "You are skilled at scaling vertical surfaces, from smooth city walls to rocky cliffs.",
+        "charactersitic": "Str",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdd8eaec7296eb88e3b58"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Craft",
+        "description": "You are skilled in the creation of a specific group of items, such as armor or weapons. Like Knowledge, Perform, and Profession, Craft is actually a number of separate skills. You could have several Craft skills, each with its own ranks. The most common Craft skills are alchemy, armor, baskets, books, bows, calligraphy, carpentry, cloth, clothing, glass, jewelry, leather, locks, paintings, pottery, sculptures, ships, shoes, stonemasonry, traps, and weapons.",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdda3aec7296eb88e3b59"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Diplomacy",
+        "description": "You can use this skill to persuade others to agree with your arguments, to resolve differences, and to gather valuable information or rumors from people. This skill is also used to negotiate conflicts by using the proper etiquette and manners suitable to the problem.",
+        "charactersitic": "Cha",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fddd5aec7296eb88e3b5a"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Disable Device",
+        "description": "You are skilled at disarming traps and opening locks. In addition, this skill lets you sabotage simple mechanical devices, such as catapults, wagon wheels, and doors.",
+        "charactersitic": "Dex",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fddf5aec7296eb88e3b5b"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Disguise",
+        "description": "You are skilled at changing your appearance.",
+        "charactersitic": "Cha",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fde0daec7296eb88e3b5c"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Escape Artist",
+        "description": "Your training allows you to slip out of bonds and escape from grapples.",
+        "charactersitic": "Dex",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fde31aec7296eb88e3b5d"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Fly",
+        "description": "You are skilled at flying, through either the use of wings or magic, and can perform daring or complex maneuvers while airborne. Note that this skill does not give you the ability to fly.",
+        "charactersitic": "Dex",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fde4daec7296eb88e3b5e"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Handle Animal",
+        "description": "You are trained at working with animals, and can teach them tricks, get them to follow your simple commands, or even domesticate them.",
+        "charactersitic": "Cha",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fde66aec7296eb88e3b5f"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Heal",
+        "description": "You are skilled at tending to wounds and ailments.",
+        "charactersitic": "Wis",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fde7caec7296eb88e3b60"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Intimidate",
+        "description": "You can use this skill to frighten an opponent or to get them to act in a way that benefits you. This skill includes verbal threats and displays of prowess.",
+        "charactersitic": "Cha",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdeedaec7296eb88e3b61"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Knowledge (Arcana)",
+        "description": "ancient mysteries, magic traditions, arcane symbols, constructs, dragons, magical beasts",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdefbaec7296eb88e3b62"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Knowledge (Dungeoneering)",
+        "description": "aberrations, caverns, oozes, spelunking",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdf05aec7296eb88e3b63"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Knowledge (Engineering)",
+        "description": "buildings, aqueducts, bridges, fortifications",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdf10aec7296eb88e3b64"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Knowledge (Geography)",
+        "description": "lands, terrain, climate, people",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdf1caec7296eb88e3b65"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Knowledge (History)",
+        "description": "wars, colonies, migrations, founding of cities",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdf27aec7296eb88e3b66"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Knowledge (Local)",
+        "description": "legends, personalities, inhabitants, laws, customs, traditions, humanoids",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdf33aec7296eb88e3b67"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Knowledge (Nature)",
+        "description": "animals, fey, monstrous humanoids, plants, seasons and cycles, weather, vermin",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdf3faec7296eb88e3b68"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Knowledge (Nobility)",
+        "description": "lineages, heraldry, personalities, royalty",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdf4baec7296eb88e3b69"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Knowledge (Planes)",
+        "description": "the Inner Planes, the Outer Planes, the Astral Plane, the Ethereal Plane, outsiders, planar magic",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdf58aec7296eb88e3b6a"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Knowledge (Religion)",
+        "description": "gods and goddesses, mythic history, ecclesiastic tradition, holy symbols, undead",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdf6eaec7296eb88e3b6b"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Linguistics",
+        "description": "You are skilled at working with language, in both its spoken and written forms. You can speak multiple languages, and can decipher nearly any tongue given enough time. Your skill in writing allows you to create and detect forgeries as well.",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdf94aec7296eb88e3b6c"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Perception",
+        "description": "Your senses allow you to notice fine details and alert you to danger. Perception covers all five senses, including sight, hearing, touch, taste, and smell.",
+        "charactersitic": "Wis",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdfa4aec7296eb88e3b6d"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Perform",
+        "description": "You are skilled at one form of entertainment, from singing to acting to playing an instrument. Like Craft, Knowledge, and Profession, Perform is actually a number of separate skills. You could have several Perform skills, each with its own ranks.",
+        "charactersitic": "Cha",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdfbcaec7296eb88e3b6e"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Profession",
+        "description": "You are skilled at a specific job. Like Craft, Knowledge, and Perform, Profession is actually a number of separate skills. You could have several Profession skills, each with its own ranks. While a Craft skill represents ability in creating an item, a Profession skill represents an aptitude in a vocation requiring a broader range of less specific knowledge. The most common Profession skills are architect, baker, barrister, brewer, butcher, clerk, cook, courtesan, driver, engineer, farmer, fisherman, gambler, gardener, herbalist, innkeeper, librarian, merchant, midwife, miller, miner, porter, sailor, scribe, shepherd, stable master, soldier, tanner, trapper, and woodcutter.",
+        "charactersitic": "Wid",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdfd9aec7296eb88e3b6f"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Ride",
+        "description": "You are skilled at riding mounts, usually a horse, but possibly something more exotic, like a griffon or pegasus. If you attempt to ride a creature that is ill suited as a mount, you take a –5 penalty on your Ride checks.",
+        "charactersitic": "Dex",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fdfecaec7296eb88e3b70"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Sense Motive",
+        "description": "You are skilled at detecting falsehoods and true intentions.",
+        "charactersitic": "Wis",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fe004aec7296eb88e3b71"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Sleight of Hand",
+        "description": "Your training allows you to pick pockets, draw hidden weapons, and take a variety of actions without being noticed.",
+        "charactersitic": "Dex",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fe090aec7296eb88e3b72"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Spellcraft",
+        "description": "You are skilled at the art of casting spells, identifying magic items, crafting magic items, and identifying spells as they are being cast.",
+        "charactersitic": "Int",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fe0a4aec7296eb88e3b73"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Stealth",
+        "description": "You are skilled at avoiding detection, allowing you to slip past foes or strike from an unseen position. This skill covers hiding and moving silently.",
+        "charactersitic": "Dex",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fe0b9aec7296eb88e3b74"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Survival",
+        "description": "You are skilled at surviving in the wild and at navigating in the wilderness. You also excel at following trails and tracks left by others.",
+        "charactersitic": "Wis",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fe0d2aec7296eb88e3b75"
+        },
+        "needTraining": false,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Swim",
+        "description": "You know how to swim and can do so even in stormy water.",
+        "charactersitic": "Str",
+        "__v": 0
+    }, {
+        "_id": {
+            "$oid": "609fe0e4aec7296eb88e3b76"
+        },
+        "needTraining": true,
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Use Magic Device",
+        "description": "You are skilled at activating magic items, even if you are not otherwise trained in their use.",
+        "charactersitic": "Cha",
+        "__v": 0
     }]
 }

@@ -3,7 +3,7 @@ import { ISystem } from "./system.interface";
 
 export interface ICharacteristic extends Document {
     system: ISystem["_id"];
-    name: number;
     shortName: number;
+    name: string;
     description: string;
 }
