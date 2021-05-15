@@ -1,5 +1,5 @@
 import { Model, model, Schema } from "mongoose";
-import { IRace } from "../interfaces/race.interface";
+import { ICharacteristic } from "../interfaces/characteristic.interface";
 
 const schema: Schema = new Schema({
     system: {
@@ -10,11 +10,15 @@ const schema: Schema = new Schema({
         type: String,
         required: true
     },
+    shortName: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         required: true
     },
 });
 
-const Race: Model<IRace> = model("Race", schema);
-export default Race;
+const Characteristic: Model<ICharacteristic> = model("Characteristic", schema);
+export default Characteristic;

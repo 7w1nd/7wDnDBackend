@@ -13,5 +13,4 @@ const schema: Schema = new Schema({
 });
 
 const RaceTrait: Model<IRaceTrait> = model("RaceTrait", schema);
-RaceTrait.createCollection();
 export default RaceTrait;

@@ -9,5 +9,4 @@ const schema: Schema = new Schema({
 });
 
 const System: Model<ISystem> = model("System", schema);
-System.createCollection();
 export default System;

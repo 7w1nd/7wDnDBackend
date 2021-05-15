@@ -36,5 +36,4 @@ const schema: Schema = new Schema({
 });
 
 const Class: Model<IClass> = model("Class", schema);
-Class.createCollection();
 export default Class;
