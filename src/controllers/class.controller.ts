@@ -49,7 +49,15 @@ export const add = (req: any, res: any, next: any) => {
                 res.status(404).json({ message: `System with id: ${systemId} not found` });
             const name = req.body.name;
             const description = req.body.description;
-            const newClass: IClass = new Class({ system: systemId, name: name, description: description });
+            const role = req.body.role;
+            const availableAlignments = req.body.availableAlignments;
+            const hitDice = req.body.hitDice;
+            const skillRanksPerLvl = req.body.skillRanksPerLvl;
+
+            const newClass: IClass = new Class({
+                system: systemId, name: name, description: description, role: role,
+                availableAlignments: availableAlignments, hitDice: hitDice, skillRanksPerLvl: skillRanksPerLvl
+            });
             newClass.validate().then(() => newClass.save().then(_class => {
                 res.json({ data: _class });
             }));
@@ -60,7 +68,7 @@ export const add = (req: any, res: any, next: any) => {
  * update class info
  */
 export const put = (req: any, res: any, next: any) => {
-    const classId = req.params.race_id;
+    const classId = req.params.class_id;
     if (!classId) {
         res.status(404).json({ message: 'Class ID parameter not found in request query' });
     }
@@ -70,7 +78,14 @@ export const put = (req: any, res: any, next: any) => {
                 res.status(404).json({ message: `Class with id: ${classId} not found` });
             const name = req.body.name ? req.body.name : _class?.name;
             const description = req.body.description ? req.body.description : _class?.description;
-            Class.updateOne({ _id: classId }, { name: name, description: description }).then(r => {
+            const role = req.body.role ? req.body.role : _class?.role;
+            const availableAlignments = req.body.availableAlignments;
+            const hitDice = req.body.hitDice;
+            const skillRanksPerLvl = req.body.skillRanksPerLvl;
+            Class.updateOne({ _id: classId }, {
+                name: name, description: description, role: role,
+                availableAlignments: availableAlignments, hitDice: hitDice, skillRanksPerLvl: skillRanksPerLvl
+            }).then(r => {
                 res.json(r);
             });
         })

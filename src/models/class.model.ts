@@ -10,8 +10,27 @@ const schema: Schema = new Schema({
         type: String,
         required: true
     },
+    role: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
+        required: true
+    },
+    availableAlignments: {
+        type: String,
+        default: "LN,LN,LE,NG,N,NE,CG,CN,CE",
+        required: true
+    },
+    hitDice: {
+        type: String,
+        default: 8,
+        required: true
+    },
+    skillRanksPerLvl: {
+        type: String,
+        default: 2,
         required: true
     },
 });
