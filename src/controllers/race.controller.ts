@@ -1,5 +1,6 @@
 import { IRace } from "../interfaces/race.interface";
 import Race from "../models/race.model";
+import System from "../models/system.model";
 
 /**
  * get all rases
@@ -42,12 +43,17 @@ export const add = (req: any, res: any, next: any) => {
     if (!systemId) {
         res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
-    const name = req.body.name;
-    const description = req.body.description;
-    const newRace: IRace = new Race({ system: systemId, name: name, description: description });
-    newRace.validate().then(() => newRace.save().then(race => {
-        res.json({ data: race });
-    }))
+    System.findById(systemId)
+        .then(system => {
+            if (!system)
+                res.status(404).json({ message: `System with id: ${systemId} not found` });
+            const name = req.body.name;
+            const description = req.body.description;
+            const newRace: IRace = new Race({ system: systemId, name: name, description: description });
+            newRace.validate().then(() => newRace.save().then(race => {
+                res.json({ data: race });
+            }));
+        })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };
 /**
