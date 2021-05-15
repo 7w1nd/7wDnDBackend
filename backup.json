@@ -1,0 +1,186 @@
+{
+    "systems": [{
+        "_id": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Pathfinder 1e"
+    }, {
+        "_id": {
+            "$oid": "609f859fb43e932a68681fd5"
+        },
+        "name": "DnD 5e"
+    }, {
+        "_id": {
+            "$oid": "609f859fb43e932a68681fd6"
+        },
+        "name": "Worm"
+    }],
+    "races": [{
+        "_id": {
+            "$oid": "609fb5091e54a872b81723ef"
+        },
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Human",
+        "description": "Humans possess exceptional drive and a great capacity to endure and expand, and as such are currently the dominant race in the world. Their empires and nations are vast, sprawling things, and the citizens of these societies carve names for themselves with the strength of their sword arms and the power of their spells. Humanity is best characterized by its tumultuousness and diversity, and human cultures run the gamut from savage but honorable tribes to decadent, devil-worshiping noble families in the most cosmopolitan cities. Human curiosity and ambition often triumph over their predilection for a sedentary lifestyle, and many leave their homes to explore the innumerable forgotten corners of the world or lead mighty armies to conquer their neighbors, simply because they can."
+    }, {
+        "_id": {
+            "$oid": "609fc254335d431ea0ec16ab"
+        },
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Hulfling",
+        "description": "Optimistic and cheerful by nature, blessed with uncanny luck and driven by a powerful wanderlust, halflings make up for their short stature with an abundance of bravado and curiosity. At once excitable and easy-going, halflings like to keep an even temper and a steady eye on opportunity, and are not as prone as some of the more volatile races to violent or emotional outbursts. Even in the jaws of catastrophe, a halfling almost never loses his sense of humor. Halflings are inveterate opportunists. Unable to physically defend themselves from the rigors of the world, they know when to bend with the wind and when to hide away. Yet a halfling's curiosity often overwhelms his good sense, leading to poor decisions and narrow escapes. Though their curiosity drives them to travel and seek new places and experiences, halflings possess a strong sense of house and home, often spending above their means to enhance the comforts of home life."
+    }],
+    "classes": [{
+        "_id": {
+            "$oid": "609fc7c33a70ef30c04bc545"
+        },
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Rogue",
+        "description": "The rogue is a thief and a scout, an opportunist capable of delivering brutal strikes against unwary foes."
+    }, {
+        "_id": {
+            "$oid": "609fc7de3a70ef30c04bc546"
+        },
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Bard",
+        "description": "The bard uses skill and spell alike to bolster his allies, confound his enemies, and build upon his fame."
+    }, {
+        "_id": {
+            "$oid": "609fc7f43a70ef30c04bc547"
+        },
+        "system": {
+            "$oid": "609f859fb43e932a68681fd4"
+        },
+        "name": "Fighter",
+        "description": "Brave and stalwart, the fighter is a master of all manner of arms and armor."
+    }],
+    "racetraits": [{
+        "_id": {
+            "$oid": "609fc3efb021584594a17e41"
+        },
+        "race": {
+            "$oid": "609fb5091e54a872b81723ef"
+        },
+        "description": "Human characters get a +2 bonus to one ability score of their choice at creation to represent their varied nature."
+    }, {
+        "_id": {
+            "$oid": "609fc404b021584594a17e42"
+        },
+        "race": {
+            "$oid": "609fb5091e54a872b81723ef"
+        },
+        "description": "Humans are Medium creatures and have no bonuses or penalties due to their size"
+    }, {
+        "_id": {
+            "$oid": "609fc415b021584594a17e43"
+        },
+        "race": {
+            "$oid": "609fb5091e54a872b81723ef"
+        },
+        "description": "Humans have a base speed of 30 feet"
+    }, {
+        "_id": {
+            "$oid": "609fc423b021584594a17e44"
+        },
+        "race": {
+            "$oid": "609fb5091e54a872b81723ef"
+        },
+        "description": "Humans select one extra feat at 1st level"
+    }, {
+        "_id": {
+            "$oid": "609fc434b021584594a17e45"
+        },
+        "race": {
+            "$oid": "609fb5091e54a872b81723ef"
+        },
+        "description": "Humans gain an additional skill rank at first level and one additional rank whenever they gain a level"
+    }, {
+        "_id": {
+            "$oid": "609fc449b021584594a17e46"
+        },
+        "race": {
+            "$oid": "609fb5091e54a872b81723ef"
+        },
+        "description": "Humans begin play speaking Common. Humans with high Intelligence scores can choose any languages they want (except secret languages, such as Druidic)."
+    }, {
+        "_id": {
+            "$oid": "609fc496b021584594a17e47"
+        },
+        "race": {
+            "$oid": "609fc254335d431ea0ec16ab"
+        },
+        "description": "Halflings are nimble and strong-willed, but their small stature makes them weaker than other races."
+    }, {
+        "_id": {
+            "$oid": "609fc4abb021584594a17e48"
+        },
+        "race": {
+            "$oid": "609fc254335d431ea0ec16ab"
+        },
+        "description": "Halflings are Small creatures and gain a +1 size bonus to their AC, a +1 size bonus on attack rolls, a –1 penalty to their Combat Maneuver Bonus and Combat Maneuver Defense, and a +4 size bonus on Stealth checks"
+    }, {
+        "_id": {
+            "$oid": "609fc4beb021584594a17e49"
+        },
+        "race": {
+            "$oid": "609fc254335d431ea0ec16ab"
+        },
+        "description": "Halflings have a base speed of 20 feet."
+    }, {
+        "_id": {
+            "$oid": "609fc4d0b021584594a17e4a"
+        },
+        "race": {
+            "$oid": "609fc254335d431ea0ec16ab"
+        },
+        "description": "Halflings receive a +2 racial bonus on all saving throws against fear. This bonus stacks with the bonus granted by halfling luck."
+    }, {
+        "_id": {
+            "$oid": "609fc4e5b021584594a17e4b"
+        },
+        "race": {
+            "$oid": "609fc254335d431ea0ec16ab"
+        },
+        "description": "Halflings receive a +1 racial bonus on all saving throws."
+    }, {
+        "_id": {
+            "$oid": "609fc4f3b021584594a17e4c"
+        },
+        "race": {
+            "$oid": "609fc254335d431ea0ec16ab"
+        },
+        "description": "Halflings receive a +2 racial bonus on Perception skill checks."
+    }, {
+        "_id": {
+            "$oid": "609fc525b021584594a17e4d"
+        },
+        "race": {
+            "$oid": "609fc254335d431ea0ec16ab"
+        },
+        "description": "Halflings receive a +2 racial bonus on Acrobatics and Climb skill checks."
+    }, {
+        "_id": {
+            "$oid": "609fc537b021584594a17e4e"
+        },
+        "race": {
+            "$oid": "609fc254335d431ea0ec16ab"
+        },
+        "description": "Halflings are proficient with slings and treat any weapon with the word “halfling” in its name as a martial weapon."
+    }, {
+        "_id": {
+            "$oid": "609fc548b021584594a17e4f"
+        },
+        "race": {
+            "$oid": "609fc254335d431ea0ec16ab"
+        },
+        "description": "Halflings begin play speaking Common and Halfling. Halflings with high Intelligence scores can choose from the following: Dwarven, Elven, Gnome, and Goblin"
+    }]
+}
