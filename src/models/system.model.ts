@@ -1,17 +1,13 @@
 import { Model, model, Schema } from "mongoose";
 import { ISystem } from "../interfaces/system.interface";
 
-const systemSchema: Schema = new Schema({
-    id: {
-        type: Number,
-        required: true
-    },
+const schema: Schema = new Schema({
     name: {
         type: String,
         required: true
     },
 });
 
-const System: Model<ISystem> = model("System", systemSchema);
+const System: Model<ISystem> = model("System", schema);
 System.createCollection();
 export default System;

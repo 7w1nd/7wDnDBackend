@@ -1,15 +1,14 @@
 import System from "../models/system.model";
 
+/**
+ * get all systems
+ */
 export const get = (req: any, res: any, next: any) => {
     System.find({})
         .then((data) => {
-            console.log(data);
-            if (data != null)
-                res.json({
-                    data: data,
-                });
-            else
-                res.status(400).json({ message: 'error get systems' })
+            res.json({
+                data: data,
+            });
         })
-        .catch(err => res.status(400).json({ message: err }));
+        .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };
