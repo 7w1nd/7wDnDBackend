@@ -8,7 +8,7 @@ import System from "../models/system.model";
 export const get = (req: any, res: any, next: any) => {
     const systemId = req.params.system_id;
     if (!systemId) {
-        res.status(404).json({ message: 'System ID parameter not found in request query' });
+        return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     Race.find({ system: systemId })
         .then((data) => {
@@ -24,7 +24,7 @@ export const get = (req: any, res: any, next: any) => {
 export const getOne = (req: any, res: any, next: any) => {
     const systemId = req.params.system_id;
     if (!systemId) {
-        res.status(404).json({ message: 'System ID parameter not found in request query' });
+        return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     const raceId = req.params.race_id;
     Race.findById(raceId)
@@ -41,12 +41,12 @@ export const getOne = (req: any, res: any, next: any) => {
 export const add = (req: any, res: any, next: any) => {
     const systemId = req.params.system_id;
     if (!systemId) {
-        res.status(404).json({ message: 'System ID parameter not found in request query' });
+        return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     System.findById(systemId)
         .then(system => {
             if (!system)
-                res.status(404).json({ message: `System with id: ${systemId} not found` });
+                return res.status(404).json({ message: `System with id: ${systemId} not found` });
             const name = req.body.name;
             const description = req.body.description;
             const newRace: IRace = new Race({ system: systemId, name: name, description: description });
@@ -62,12 +62,12 @@ export const add = (req: any, res: any, next: any) => {
 export const put = (req: any, res: any, next: any) => {
     const raceId = req.params.race_id;
     if (!raceId) {
-        res.status(404).json({ message: 'Race ID parameter not found in request query' });
+        return res.status(404).json({ message: 'Race ID parameter not found in request query' });
     }
     Race.findById(raceId)
         .then(race => {
             if (!race)
-                res.status(404).json({ message: `Race with id: ${raceId} not found` });
+                return res.status(404).json({ message: `Race with id: ${raceId} not found` });
             const name = req.body.name ? req.body.name : race?.name;
             const description = req.body.description ? req.body.description : race?.description;
             Race.updateOne({ _id: raceId }, { name: name, description: description }).then(r => {
@@ -82,12 +82,12 @@ export const put = (req: any, res: any, next: any) => {
 export const remove = (req: any, res: any, next: any) => {
     const raceId = req.params.race_id;
     if (!raceId) {
-        res.status(404).json({ message: 'Race ID parameter not found in request query' });
+        return res.status(404).json({ message: 'Race ID parameter not found in request query' });
     }
     Race.findById(raceId)
         .then(race => {
             if (!race)
-                res.status(404).json({ message: `Race with id: ${raceId} not found` });
+                return res.status(404).json({ message: `Race with id: ${raceId} not found` });
             Race.deleteOne({ _id: raceId }).then(r => {
                 res.json(r);
             });

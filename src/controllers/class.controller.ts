@@ -8,7 +8,7 @@ import System from "../models/system.model";
 export const get = (req: any, res: any, next: any) => {
     const systemId = req.params.system_id;
     if (!systemId) {
-        res.status(404).json({ message: 'System ID parameter not found in request query' });
+        return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     Class.find({ system: systemId })
         .then((data) => {
@@ -24,7 +24,7 @@ export const get = (req: any, res: any, next: any) => {
 export const getOne = (req: any, res: any, next: any) => {
     const systemId = req.params.system_id;
     if (!systemId) {
-        res.status(404).json({ message: 'System ID parameter not found in request query' });
+        return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     const classId = req.params.class_id;
     Class.findById(classId)
@@ -41,12 +41,12 @@ export const getOne = (req: any, res: any, next: any) => {
 export const add = (req: any, res: any, next: any) => {
     const systemId = req.params.system_id;
     if (!systemId) {
-        res.status(404).json({ message: 'System ID parameter not found in request query' });
+        return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     System.findById(systemId)
         .then(system => {
             if (!system)
-                res.status(404).json({ message: `System with id: ${systemId} not found` });
+                return res.status(404).json({ message: `System with id: ${systemId} not found` });
             const name = req.body.name;
             const description = req.body.description;
             const role = req.body.role;
@@ -70,12 +70,12 @@ export const add = (req: any, res: any, next: any) => {
 export const put = (req: any, res: any, next: any) => {
     const classId = req.params.class_id;
     if (!classId) {
-        res.status(404).json({ message: 'Class ID parameter not found in request query' });
+        return res.status(404).json({ message: 'Class ID parameter not found in request query' });
     }
     Class.findById(classId)
         .then(_class => {
             if (!_class)
-                res.status(404).json({ message: `Class with id: ${classId} not found` });
+                return res.status(404).json({ message: `Class with id: ${classId} not found` });
             const name = req.body.name ? req.body.name : _class?.name;
             const description = req.body.description ? req.body.description : _class?.description;
             const role = req.body.role ? req.body.role : _class?.role;
@@ -97,12 +97,12 @@ export const put = (req: any, res: any, next: any) => {
 export const remove = (req: any, res: any, next: any) => {
     const classId = req.params.class_id;
     if (!classId) {
-        res.status(404).json({ message: 'Class ID parameter not found in request query' });
+        return res.status(404).json({ message: 'Class ID parameter not found in request query' });
     }
     Class.findById(classId)
         .then(_class => {
             if (!_class)
-                res.status(404).json({ message: `Class with id: ${classId} not found` });
+                return res.status(404).json({ message: `Class with id: ${classId} not found` });
             Class.deleteOne({ _id: classId }).then(r => {
                 res.json(r);
             });

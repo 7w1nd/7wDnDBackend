@@ -10,7 +10,7 @@ import System from "../models/system.model";
 export const get = (req: any, res: any, next: any) => {
     const systemId = req.params.system_id;
     if (!systemId) {
-        res.status(404).json({ message: 'System ID parameter not found in request query' });
+        return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     Skill.find({ system: systemId })
         .then((data) => {
@@ -26,7 +26,7 @@ export const get = (req: any, res: any, next: any) => {
 export const getOne = (req: any, res: any, next: any) => {
     const systemId = req.params.system_id;
     if (!systemId) {
-        res.status(404).json({ message: 'System ID parameter not found in request query' });
+        return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     const skillId = req.params.skill_id;
     Skill.find({ _id: skillId })
@@ -43,12 +43,12 @@ export const getOne = (req: any, res: any, next: any) => {
 export const add = (req: any, res: any, next: any) => {
     const systemId = req.params.system_id;
     if (!systemId) {
-        res.status(404).json({ message: 'System ID parameter not found in request query' });
+        return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     System.findById(systemId)
         .then(system => {
             if (!system)
-                res.status(404).json({ message: `System with id: ${systemId} not found` });
+                return res.status(404).json({ message: `System with id: ${systemId} not found` });
             const name = req.body.name;
             const description = req.body.description;
             const charactersitic = req.body.charactersitic;
@@ -69,12 +69,12 @@ export const add = (req: any, res: any, next: any) => {
 export const put = (req: any, res: any, next: any) => {
     const characteristicId = req.params.characteristic_id;
     if (!characteristicId) {
-        res.status(404).json({ message: 'Skill ID parameter not found in request query' });
+        return res.status(404).json({ message: 'Skill ID parameter not found in request query' });
     }
     Skill.findById(characteristicId)
         .then(skill => {
             if (!skill)
-                res.status(404).json({ message: `Skill with id: ${characteristicId} not found` });
+                return res.status(404).json({ message: `Skill with id: ${characteristicId} not found` });
             const name = req.body.name ? req.body.name : skill?.name;
             const description = req.body.description ? req.body.description : skill?.description;
             const charactersitic = req.body.charactersitic ? req.body.charactersitic : skill?.charactersitic;
@@ -94,12 +94,12 @@ export const put = (req: any, res: any, next: any) => {
 export const remove = (req: any, res: any, next: any) => {
     const skillId = req.params.skill_id;
     if (!skillId) {
-        res.status(404).json({ message: 'Skill ID parameter not found in request query' });
+        return res.status(404).json({ message: 'Skill ID parameter not found in request query' });
     }
     Skill.findById(skillId)
         .then(skill => {
             if (!skill)
-                res.status(404).json({ message: `Skill with id: ${skillId} not found` });
+                return res.status(404).json({ message: `Skill with id: ${skillId} not found` });
             Skill.deleteOne({ _id: skillId }).then(r => {
                 res.json(r);
             });
