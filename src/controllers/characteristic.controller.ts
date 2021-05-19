@@ -21,14 +21,13 @@ export const get = (req: any, res: any, next: any) => {
 /**
  * get one characteristic
  */
-export const getOne = (req: any, res: any, next: any) => {
-    const systemId = req.params.system_id;
-    if (!systemId) {
-        return res.status(404).json({ message: 'System ID parameter not found in request query' });
-    }
-    const characteristicShortName = req.params.short_name;
-    Characteristic.find({ shortName: characteristicShortName })
+export const detail = (req: any, res: any, next: any) => {
+    const id = req.params.characteristic_id;
+    Characteristic.findById(id)
         .then((data) => {
+            if (!data) {
+                return res.status(404).json({ message: `Chatacteristic with id ${id} not found` });
+            }
             res.json({
                 data: data,
             });
@@ -44,16 +43,20 @@ export const add = (req: any, res: any, next: any) => {
         return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     System.findById(systemId)
-        .then(system => {
+        .then(async system => {
             if (!system)
                 return res.status(404).json({ message: `System with id: ${systemId} not found` });
-            const name = req.body.name;
-            const shortName = req.body.short_name;
-            const description = req.body.description;
-            const newCharacteristic: ICharacteristic = new Characteristic({ system: systemId, name: name, description: description, shortName: shortName });
-            newCharacteristic.validate().then(() => newCharacteristic.save().then(characteristic => {
-                res.json({ data: characteristic });
-            }));
+            const result: ICharacteristic[] = [];
+            for (let index = 0; index < req.body.length; index++) {
+                const name = req.body[index].name;
+                const shortName = req.body[index].short_name;
+                const description = req.body[index].description;
+                const newCharacteristic: ICharacteristic = new Characteristic({ system: systemId, name: name, description: description, shortName: shortName });
+                await newCharacteristic.validate().then(() => newCharacteristic.save().then(characteristic => {
+                    result.push(characteristic);
+                }));
+            }
+            res.json({ data: result });
         })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };

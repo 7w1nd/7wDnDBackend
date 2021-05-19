@@ -28,15 +28,19 @@ export const add = (req: any, res: any, next: any) => {
         return res.status(404).json({ message: 'Race ID parameter not found in request query' });
     }
     Race.findById(raceId)
-        .then(race => {
+        .then(async race => {
             if (!race)
                 return res.status(404).json({ message: `Race with id: ${raceId} not found` });
-            const name = req.body.name;
-            const description = req.body.description;
-            const newRaceTrait: IRaceTrait = new RaceTrait({ race: raceId, name: name, description: description });
-            newRaceTrait.validate().then(() => newRaceTrait.save().then(trait => {
-                res.json({ data: trait });
-            }))
+            const result: IRaceTrait[] = [];
+            for (let index = 0; index < req.body.length; index++) {
+                const name = req.body.name;
+                const description = req.body.description;
+                const newRaceTrait: IRaceTrait = new RaceTrait({ race: raceId, name: name, description: description });
+                await newRaceTrait.validate().then(() => newRaceTrait.save().then(trait => {
+                    result.push(trait);
+                }));
+            }
+            res.json({ data: result });
         })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };

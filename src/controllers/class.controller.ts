@@ -21,14 +21,13 @@ export const get = (req: any, res: any, next: any) => {
 /**
  * get one class
  */
-export const getOne = (req: any, res: any, next: any) => {
-    const systemId = req.params.system_id;
-    if (!systemId) {
-        return res.status(404).json({ message: 'System ID parameter not found in request query' });
-    }
+export const detail = (req: any, res: any, next: any) => {
     const classId = req.params.class_id;
     Class.findById(classId)
         .then((data) => {
+            if (!data) {
+                return res.status(404).json({ message: `Class with id ${classId} not found` });
+            }
             res.json({
                 data: data,
             });
@@ -41,26 +40,30 @@ export const getOne = (req: any, res: any, next: any) => {
 export const add = (req: any, res: any, next: any) => {
     const systemId = req.params.system_id;
     if (!systemId) {
-        return res.status(404).json({ message: 'System ID parameter not found in request query' });
+        return res.status(404).json({ message: 'System ID parameter not found in request body' });
     }
     System.findById(systemId)
-        .then(system => {
+        .then(async system => {
             if (!system)
                 return res.status(404).json({ message: `System with id: ${systemId} not found` });
-            const name = req.body.name;
-            const description = req.body.description;
-            const role = req.body.role;
-            const availableAlignments = req.body.availableAlignments;
-            const hitDice = req.body.hitDice;
-            const skillRanksPerLvl = req.body.skillRanksPerLvl;
+            const result: IClass[] = [];
+            for (let index = 0; index < req.body.length; index++) {
+                const name = req.body[index].name;
+                const description = req.body[index].description;
+                const role = req.body[index].role;
+                const availableAlignments = req.body[index].available_alignments;
+                const hitDice = req.body[index].hit_dice;
+                const skillRanksPerLvl = req.body[index].skill_ranks_per_lvl;
 
-            const newClass: IClass = new Class({
-                system: systemId, name: name, description: description, role: role,
-                availableAlignments: availableAlignments, hitDice: hitDice, skillRanksPerLvl: skillRanksPerLvl
-            });
-            newClass.validate().then(() => newClass.save().then(_class => {
-                res.json({ data: _class });
-            }));
+                const newClass: IClass = new Class({
+                    system: systemId, name: name, description: description, role: role,
+                    availableAlignments: availableAlignments, hitDice: hitDice, skillRanksPerLvl: skillRanksPerLvl
+                });
+                await newClass.validate().then(() => newClass.save().then(_class => {
+                    result.push(_class);
+                }));
+            }
+            res.json({ data: result });
         })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };

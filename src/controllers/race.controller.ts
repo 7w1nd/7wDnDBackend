@@ -21,14 +21,13 @@ export const get = (req: any, res: any, next: any) => {
 /**
  * get one rase
  */
-export const getOne = (req: any, res: any, next: any) => {
-    const systemId = req.params.system_id;
-    if (!systemId) {
-        return res.status(404).json({ message: 'System ID parameter not found in request query' });
-    }
+export const detail = (req: any, res: any, next: any) => {
     const raceId = req.params.race_id;
     Race.findById(raceId)
         .then((data) => {
+            if (!data) {
+                return res.status(404).json({ message: `Race with id ${raceId} not found` });
+            }
             res.json({
                 data: data,
             });
@@ -44,15 +43,19 @@ export const add = (req: any, res: any, next: any) => {
         return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     System.findById(systemId)
-        .then(system => {
+        .then(async system => {
             if (!system)
                 return res.status(404).json({ message: `System with id: ${systemId} not found` });
-            const name = req.body.name;
-            const description = req.body.description;
-            const newRace: IRace = new Race({ system: systemId, name: name, description: description });
-            newRace.validate().then(() => newRace.save().then(race => {
-                res.json({ data: race });
-            }));
+            const result: IRace[] = [];
+            for (let index = 0; index < req.body.length; index++) {
+                const name = req.body[index].name;
+                const description = req.body[index].description;
+                const newRace: IRace = new Race({ system: systemId, name: name, description: description });
+                await newRace.validate().then(() => newRace.save().then(race => {
+                    result.push(race);
+                }));
+            }
+            res.json({ data: result });
         })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };

@@ -6,8 +6,31 @@ import System from "../models/system.model";
  * get all characters
  */
 export const get = (req: any, res: any, next: any) => {
+    Character.aggregate([
+        {
+            $lookup: {
+                from: 'systems',
+                localField: 'system',
+                foreignField: '_id',
+                as: 'system'
+            }
+        },
+        {
+            $unwind: '$system'
+        },
+    ]).then((data) => {
+        res.json({
+            data: data,
+        });
+    })
+        .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
+};
+
+/**
+ * get characters by system
+ */
+export const find = (req: any, res: any, next: any) => {
     const systemId = req.params.system_id;
-    console.log(req.params);
     if (!systemId) {
         return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
@@ -22,14 +45,13 @@ export const get = (req: any, res: any, next: any) => {
 /**
  * get one character
  */
-export const getOne = (req: any, res: any, next: any) => {
-    const systemId = req.params.system_id;
-    if (!systemId) {
-        return res.status(404).json({ message: 'System ID parameter not found in request query' });
-    }
-    const characterId = req.params.character_id;
-    Character.find({ character_id: characterId })
+export const detail = (req: any, res: any, next: any) => {
+    const id = req.params.character_id;
+    Character.findById(id)
         .then((data) => {
+            if (!data) {
+                return res.status(404).json({ message: `Chatacter with id ${id} not found` });
+            }
             res.json({
                 data: data,
             });
@@ -45,27 +67,26 @@ export const add = (req: any, res: any, next: any) => {
         return res.status(404).json({ message: 'System ID parameter not found in request query' });
     }
     System.findById(systemId)
-        .then(system => {
+        .then(async system => {
             if (!system)
                 return res.status(404).json({ message: `System with id: ${systemId} not found` });
             const created_characters: ICharacter[] = [];
             for (let index = 0; index < req.body.length; index++) {
-                const character = req.body[index];
 
-                const name = character.name;
-                const playerName = character.player_name;
-                const race = character.race;
-                const _class = character.class;
-                const currentExp = character.current_exp;
-                const level = character.level;
-                const note = character.note;
+                const name = req.body[index].name;
+                const playerName = req.body[index].player_name;
+                const race = req.body[index].race;
+                const _class = req.body[index].class;
+                const currentExp = req.body[index].current_exp;
+                const level = req.body[index].level;
+                const note = req.body[index].note;
 
                 const newCharacter: ICharacter = new Character({
                     system: systemId, name: name, playerName: playerName,
                     race: race, class: _class,
                     currentExp: currentExp, level: level, note: note
                 });
-                newCharacter.validate().then(() => newCharacter.save().then(character => {
+                await newCharacter.validate().then(() => newCharacter.save().then(character => {
                     created_characters.push(character);
                 }));
             }
