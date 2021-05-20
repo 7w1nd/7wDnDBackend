@@ -46,17 +46,24 @@ export const add = (req: any, res: any, next: any) => {
         .then(async system => {
             if (!system)
                 return res.status(404).json({ message: `System with id: ${systemId} not found` });
-            const result: ICharacteristic[] = [];
+            const dbCharacteristics = await Characteristic.find({ system: systemId });
+            const created: ICharacteristic[] = [];
+            const exists: ICharacteristic[] = [];
             for (let index = 0; index < req.body.length; index++) {
                 const name = req.body[index].name;
-                const shortName = req.body[index].short_name;
+                const shortName = req.body[index].shortName;
                 const description = req.body[index].description;
+
+                if (dbCharacteristics.some(a => a.name == name || a.shortName == shortName)) {
+                    exists.push(req.body[index])
+                    continue;
+                }
                 const newCharacteristic: ICharacteristic = new Characteristic({ system: systemId, name: name, description: description, shortName: shortName });
                 await newCharacteristic.validate().then(() => newCharacteristic.save().then(characteristic => {
-                    result.push(characteristic);
+                    created.push(characteristic);
                 }));
             }
-            res.json({ data: result });
+            return res.json({ status: exists.length ? 201 : 200, created: created, exists: exists });
         })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };

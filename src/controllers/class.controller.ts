@@ -46,24 +46,30 @@ export const add = (req: any, res: any, next: any) => {
         .then(async system => {
             if (!system)
                 return res.status(404).json({ message: `System with id: ${systemId} not found` });
-            const result: IClass[] = [];
+            const dbClasses = await Class.find({ system: systemId });
+            const created: IClass[] = [];
+            const exists: IClass[] = [];
             for (let index = 0; index < req.body.length; index++) {
                 const name = req.body[index].name;
                 const description = req.body[index].description;
                 const role = req.body[index].role;
-                const availableAlignments = req.body[index].available_alignments;
-                const hitDice = req.body[index].hit_dice;
-                const skillRanksPerLvl = req.body[index].skill_ranks_per_lvl;
+                const availableAlignments = req.body[index].availableAlignments;
+                const hitDice = req.body[index].hitDice;
+                const skillRanksPerLvl = req.body[index].skillRanksPerLvl;
 
+                if (dbClasses.some(a => a.name == name)) {
+                    exists.push(req.body[index])
+                    continue;
+                }
                 const newClass: IClass = new Class({
                     system: systemId, name: name, description: description, role: role,
                     availableAlignments: availableAlignments, hitDice: hitDice, skillRanksPerLvl: skillRanksPerLvl
                 });
                 await newClass.validate().then(() => newClass.save().then(_class => {
-                    result.push(_class);
+                    created.push(_class);
                 }));
             }
-            res.json({ data: result });
+            return res.json({ status: exists.length ? 201 : 200, created: created, exists: exists });
         })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };

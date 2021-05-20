@@ -38,6 +38,40 @@ const schema: Schema = new Schema({
         type: String,
         required: true
     },
+    god: {
+        type: String,
+        default: '',
+        required: false
+    },
+    size: {
+        type: String,
+        default: 'Medium',
+        required: false
+    },
+    sex: {
+        type: String,
+        required: false
+    },
+    age: {
+        type: Number,
+        required: false
+    },
+    growth: {
+        type: Number,
+        required: false
+    },
+    weight: {
+        type: Number,
+        required: false
+    },
+    hair: {
+        type: String,
+        required: false
+    },
+    eyes: {
+        type: String,
+        required: false
+    },
 });
 
 const Character: Model<ICharacter> = model("Character", schema);

@@ -31,16 +31,24 @@ export const add = (req: any, res: any, next: any) => {
         .then(async race => {
             if (!race)
                 return res.status(404).json({ message: `Race with id: ${raceId} not found` });
-            const result: IRaceTrait[] = [];
+            const dbRaceTraits = await RaceTrait.find({ race: raceId });
+            const created: IRaceTrait[] = [];
+            const exists: IRaceTrait[] = [];
             for (let index = 0; index < req.body.length; index++) {
                 const name = req.body.name;
                 const description = req.body.description;
+
+                if (dbRaceTraits.some(a => a.name == name)) {
+                    exists.push(req.body[index])
+                    continue;
+                }
+
                 const newRaceTrait: IRaceTrait = new RaceTrait({ race: raceId, name: name, description: description });
                 await newRaceTrait.validate().then(() => newRaceTrait.save().then(trait => {
-                    result.push(trait);
+                    created.push(trait);
                 }));
             }
-            res.json({ data: result });
+            return res.json({ status: exists.length ? 201 : 200, created: created, exists: exists });
         })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };

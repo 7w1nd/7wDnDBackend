@@ -46,16 +46,24 @@ export const add = (req: any, res: any, next: any) => {
         .then(async system => {
             if (!system)
                 return res.status(404).json({ message: `System with id: ${systemId} not found` });
-            const result: IRace[] = [];
+            const dbRaces = await Race.find({ system: systemId });
+            const created: IRace[] = [];
+            const exists: IRace[] = [];
             for (let index = 0; index < req.body.length; index++) {
                 const name = req.body[index].name;
                 const description = req.body[index].description;
+
+                if (dbRaces.some(a => a.name == name)) {
+                    exists.push(req.body[index])
+                    continue;
+                }
+
                 const newRace: IRace = new Race({ system: systemId, name: name, description: description });
                 await newRace.validate().then(() => newRace.save().then(race => {
-                    result.push(race);
+                    created.push(race);
                 }));
             }
-            res.json({ data: result });
+            return res.json({ status: exists.length ? 201 : 200, created: created, exists: exists });
         })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };

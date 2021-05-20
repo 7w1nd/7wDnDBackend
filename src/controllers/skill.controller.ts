@@ -48,21 +48,30 @@ export const add = (req: any, res: any, next: any) => {
         .then(async system => {
             if (!system)
                 return res.status(404).json({ message: `System with id: ${systemId} not found` });
-            const result: ISkill[] = [];
+
+            const dbSkills = await Skill.find({ system: systemId });
+            const created: ISkill[] = [];
+            const exists: ISkill[] = [];
             for (let index = 0; index < req.body.length; index++) {
                 const name = req.body[index].name;
                 const description = req.body[index].description;
                 const charactersitic = req.body[index].charactersitic;
                 const needTraining = req.body[index].needTraining;
+
+                if (dbSkills.some(a => a.name == name)) {
+                    exists.push(req.body[index])
+                    continue;
+                }
+
                 const newCharacteristic: ISkill = new Skill({
                     system: systemId, name: name, description: description,
                     charactersitic: charactersitic, needTraining: needTraining
                 });
                 await newCharacteristic.validate().then(() => newCharacteristic.save().then(skill => {
-                    result.push(skill);
+                    created.push(skill);
                 }));
             }
-            res.json({ data: result });
+            return res.json({ status: exists.length ? 201 : 200, created: created, exists: exists });
         })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };
