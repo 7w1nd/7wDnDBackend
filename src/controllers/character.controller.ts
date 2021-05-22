@@ -90,6 +90,7 @@ export const add = (req: any, res: any, next: any) => {
                 const weight = req.body[index].weight;
                 const hair = req.body[index].hair;
                 const eyes = req.body[index].eyes;
+                const alignment = req.body[index].alignment
 
                 const existedCharacter = dbChatacters.find(a => a.name == name && a.playerName == playerName && a.race == race && a.class == _class);
                 if (existedCharacter) {
@@ -98,7 +99,7 @@ export const add = (req: any, res: any, next: any) => {
                 }
                 const newCharacter: ICharacter = new Character({
                     system: systemId, name: name, playerName: playerName,
-                    race: race, class: _class,
+                    race: race, class: _class, alignment: alignment,
                     currentExp: currentExp, level: level, note: note,
                     god: god, size: size, sex: sex, age: age,
                     growth: growth, weight: weight, hair: hair, eyes: eyes,
@@ -131,6 +132,7 @@ export const put = (req: any, res: any, next: any) => {
             const currentExp = req.body.currentExp ? req.body.currentExp : character?.currentExp;
             const level = req.body.level ? req.body.level : character?.level;
             const note = req.body.note ? req.body.note : character?.note;
+            const alignment = req.body.alignment ? req.body.alignment : character?.alignment;
 
             const god = req.body.god ? req.body.god : character?.god;
             const size = req.body.size ? req.body.size : character?.size;
@@ -144,7 +146,7 @@ export const put = (req: any, res: any, next: any) => {
             Character.updateOne({ _id: characterId }, {
                 name: name, playerName: playerName,
                 race: race, class: _class,
-                currentExp: currentExp, level: level,
+                currentExp: currentExp, level: level, alignment: alignment,
                 note: note, god: god, size: size, sex: sex,
                 age: age, growth: growth, weight: weight, hair: hair, eyes: eyes,
             }).then(r => {

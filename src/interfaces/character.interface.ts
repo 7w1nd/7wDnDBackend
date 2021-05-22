@@ -12,7 +12,7 @@ export interface ICharacter extends Document {
     currentExp: number;
     level: number;
     note: string;
-
+    alignment: string;
     god: string;
     size: string;
     sex: string;

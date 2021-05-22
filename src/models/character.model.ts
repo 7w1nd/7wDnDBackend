@@ -10,6 +10,10 @@ const schema: Schema = new Schema({
         type: String,
         required: true
     },
+    alignment: {
+        type: String,
+        required: true
+    },
     playerName: {
         type: String,
         required: true
