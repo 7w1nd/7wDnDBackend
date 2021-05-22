@@ -6,7 +6,8 @@ import System from "../models/system.model";
  * get all characters
  */
 export const get = (req: any, res: any, next: any) => {
-    Character.aggregate([
+    const { sortField, sortDir, filters } = req.query;
+    const filter: any[] = [
         {
             $lookup: {
                 from: 'systems',
@@ -18,7 +19,33 @@ export const get = (req: any, res: any, next: any) => {
         {
             $unwind: '$system'
         },
-    ]).then((data) => {
+    ];
+    if (sortField && sortDir) {
+        const sort: any = {};
+        sort[sortField] = isNaN(Number(sortDir)) ? sortDir : Number(sortDir);
+        filter.push({
+            $sort: sort
+        });
+    }
+    if (filters) {
+        try {
+            const $match = JSON.parse(filters)
+                .map((filter: { name: string, value: string }) => {
+                    const _filter: any = {};
+                    _filter[filter.name] = filter.value;
+                    return _filter;
+                });
+            if ($match.length > 0)
+                filter.push({
+                    $match: { $and: $match }
+                });
+        } catch (e) { console.log(e); }
+    }
+
+    Character.aggregate(filter).then((data) => {
+        data = data.map(a => {
+            return [a._id, a.system.name, a.name, a.level, a.currentExp, a.race, a.class, a.playerName, a.note];
+        });
         res.json({
             data: data,
         });
@@ -26,22 +53,6 @@ export const get = (req: any, res: any, next: any) => {
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };
 
-/**
- * get characters by system
- */
-export const find = (req: any, res: any, next: any) => {
-    const systemId = req.params.system_id;
-    if (!systemId) {
-        return res.status(404).json({ message: 'System ID parameter not found in request query' });
-    }
-    Character.find({ system: systemId })
-        .then((data) => {
-            res.json({
-                data: data,
-            });
-        })
-        .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
-};
 /**
  * get one character
  */
