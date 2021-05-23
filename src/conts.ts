@@ -1,1 +1,2 @@
-export const DB_URL = 'mongodb://localhost:27017/7wdnd?readPreference=primary&appname=MongoDB%20Compass&ssl=false';
+export const DB_URL = 'mongodb+srv://7wroot:SwzlBE6jQaNiEa9x@7wdnddb.c0ppx.mongodb.net/7wdnd?retryWrites=true&w=majority';
+// export const DB_URL = 'mongodb://localhost:27017/7wdnd?readPreference=primary&appname=MongoDB%20Compass&ssl=false';
