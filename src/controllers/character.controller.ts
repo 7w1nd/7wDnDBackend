@@ -6,7 +6,7 @@ import System from "../models/system.model";
  * get all characters
  */
 export const get = (req: any, res: any, next: any) => {
-    const { sortField, sortDir, filters } = req.query;
+    const { sortField, sortDir, filters, page, perPage } = req.query;
     const filter: any[] = [
         {
             $lookup: {
@@ -41,13 +41,16 @@ export const get = (req: any, res: any, next: any) => {
                 });
         } catch (e) { console.log(e); }
     }
-
     Character.aggregate(filter).then((data) => {
+
         data = data.map(a => {
             return [a._id, a.system.name, a.name, a.level, a.currentExp, a.race, a.class, a.playerName, a.note];
         });
         res.json({
-            data: data,
+            data: {
+                rows: data.slice(Number(page) * Number(perPage), Number(perPage) + Number(perPage) * Number(page)),
+                pageCount: Math.ceil(data.length / Number(perPage))
+            },
         });
     })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });

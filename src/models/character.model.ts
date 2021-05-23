@@ -40,7 +40,7 @@ const schema: Schema = new Schema({
     },
     note: {
         type: String,
-        required: true
+        required: false
     },
     god: {
         type: String,
