@@ -6,7 +6,7 @@ import System from "../models/system.model";
  * get all characters
  */
 export const get = (req: any, res: any, next: any) => {
-    const { sortField, sortDir, filters, page, perPage } = req.query;
+    const { sortField, sortDir, filters, page, perPage, all } = req.query;
     const filter: any[] = [
         {
             $lookup: {
@@ -20,14 +20,14 @@ export const get = (req: any, res: any, next: any) => {
             $unwind: '$system'
         },
     ];
-    if (sortField && sortDir) {
+    if (!all && sortField && sortDir) {
         const sort: any = {};
         sort[sortField] = isNaN(Number(sortDir)) ? sortDir : Number(sortDir);
         filter.push({
             $sort: sort
         });
     }
-    if (filters) {
+    if (!all && filters) {
         try {
             const $match = JSON.parse(filters)
                 .map((filter: { name: string, value: string }) => {
@@ -42,16 +42,19 @@ export const get = (req: any, res: any, next: any) => {
         } catch (e) { console.log(e); }
     }
     Character.aggregate(filter).then((data) => {
-
-        data = data.map(a => {
-            return [a._id, a.system.name, a.name, a.level, a.currentExp, a.race, a.class, a.playerName, a.note];
-        });
-        res.json({
-            data: {
-                rows: data.slice(Number(page) * Number(perPage), Number(perPage) + Number(perPage) * Number(page)),
-                pageCount: Math.ceil(data.length / Number(perPage))
-            },
-        });
+        if (all) {
+            return res.json({ data: data });
+        } else {
+            data = data.map(a => {
+                return [a._id, a.system.name, a.name, a.level, a.currentExp, a.race, a.class, a.playerName, a.note];
+            });
+            return res.json({
+                data: {
+                    rows: data.slice(Number(page) * Number(perPage), Number(perPage) + Number(perPage) * Number(page)),
+                    pageCount: Math.ceil(data.length / Number(perPage))
+                },
+            });
+        }
     })
         .catch(err => { console.trace(err); res.status(400).json({ message: err ? err.message ? err.message : err : err }); });
 };
